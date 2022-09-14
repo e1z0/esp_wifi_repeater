@@ -63,7 +63,7 @@
 //
 // Define this to 1 to support a loopback device (127.0.0.1)
 //
-#define		HAVE_LOOPBACK 1
+#define		HAVE_LOOPBACK 0
 
 //
 // Define this to 1 if you want to have access to the config console via TCP.
@@ -114,7 +114,7 @@
 //
 // Define this to 1 if you want to have it work as a MQTT client
 //
-#define		MQTT_CLIENT 1
+#define		MQTT_CLIENT 0
 
 #define		MQTT_BUF_SIZE 2048
 #define		MQTT_KEEPALIVE 120  /*seconds*/
@@ -146,7 +146,7 @@
 // Define this to 1 to support ENC28J60 DHCP server
 // Experimental feature - might not yet be stable
 //
-#define         DCHPSERVER_ENC28J60 1
+#define         DCHPSERVER_ENC28J60 0
 
 //
 // Define this ESP GPIO, if you have the HW-RESET pin of the ENC28J60 connected to it

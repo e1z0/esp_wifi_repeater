@@ -1,3 +1,12 @@
+# This fork additions
+
+Dockerized build environment, so you could easily build the firmware images, the following commands can be used:
+```
+make enter # enter build environment
+make build_latest # build latest firmware image
+make flash_latest # flash latest image file to usb specified as parameter ex.: make flash_latest /dev/ttyUSB0
+```
+
 # esp_wifi_repeater
 A full functional WiFi repeater (correctly: a WiFi NAT router)
 

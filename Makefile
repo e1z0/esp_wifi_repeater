@@ -169,4 +169,16 @@ clean:
 	$(Q) rm -rf $(FW_BASE) $(BUILD_BASE)
 	$(Q) find . -name "*~" -print0 | xargs -0 rm -rf
 
+enter:
+	docker run -it --rm -v ${PWD}:/home/builder/esp_wifi_repeater nulldevil/esp-open-sdk:latest sudo -- sh -c "bash"
+build_latest:
+	docker run --rm -v ${PWD}:/home/builder/esp_wifi_repeater nulldevil/esp-open-sdk:latest sudo -- sh -c "export PATH=/home/builder/esp-open-sdk/xtensa-lx106-elf/bin:$$PATH && cd esp_wifi_repeater && cp -v ../esp-open-lwip/liblwip_open.a liblwip_open_napt.a && make clean && make"
+	@echo "Done, new firmware files loacated in firmware/"
+	@echo "You can flash them by issuing command: esptool.py --port /dev/ttyUSB0 write_flash -fs 32m 0x00000 firmware/0x00000.bin 0x10000 firmware/0x10000.bin"
+	@echo "Or you can flash inside the docker using command: make flash_latest /dev/ttyUSB0"
+	@echo "You can also transfer firmware binaries to other computer and flash from there"
+flash_latest:
+	docker run --rm -v --device=$(filter-out $@,$(MAKECMDGOALS)) nulldevil/esp-open-sdk:latest sudo -- sh -c "export PATH=/home/builder/esp-open-sdk/xtensa-lx106-elf/bin:$$PATH && cd esp_wifi_repeater && esptool.py --port $(filter-out $@,$(MAKECMDGOALS)) -fs 32m 0x00000 firmware/0x00000.bin 0x10000 firmware/0x10000.bin"
+
+
 $(foreach bdir,$(BUILD_DIR),$(eval $(call compile-objects,$(bdir))))
